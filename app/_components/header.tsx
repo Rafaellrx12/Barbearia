@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <Card>
       <CardContent className="flex flex-row items-center justify-between p-5">
-        <h1>EMISS Barber</h1>
+        <img src="./public/rafa.png"></img>
         <Button size="icon" variant="outline">
           <MenuIcon />
         </Button>
