@@ -10,12 +10,10 @@ import { signOut, useSession } from "next-auth/react"
 import { Avatar, AvatarImage } from "./ui/avatar"
 import SignInDialog from "./sign-in-dialog"
 import { quickSearchOptions } from "../_contants/search"
-
 const SidebarSheet = () => {
   const { data } = useSession()
   const handleLogoutClick = () => signOut()
 
-  console.log(data?.user)
   return (
     <SheetContent className="overflow-y-auto">
       <SheetHeader>
@@ -79,7 +77,6 @@ const SidebarSheet = () => {
           </SheetClose>
         ))}
       </div>
-
       {data?.user && (
         <div className="flex flex-col gap-2 py-5">
           <Button

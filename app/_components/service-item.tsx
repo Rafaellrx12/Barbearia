@@ -20,7 +20,6 @@ import { toast } from "sonner"
 import { getBookings } from "../_actions/get-bookings"
 import { Dialog, DialogContent } from "./ui/dialog"
 import SignInDialog from "./sign-in-dialog"
-
 interface ServiceItemProps {
   service: BarbershopService
   barbershop: Pick<Barbershop, "name">
@@ -63,7 +62,6 @@ const getTimeList = (bookings: Booking[]) => {
     return true
   })
 }
-
 const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   const [signInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
   const { data } = useSession()
@@ -85,14 +83,12 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     console.log("useEffect")
     fetch()
   }, [selectedDay, service.id])
-
   const handleBookingClick = () => {
     if (data?.user) {
       return setBookingSheetIsOpen(true)
     }
     return setSignInDialogIsOpen(true)
   }
-
   const handleBookingSheetOpenChange = () => {
     setSelectedDay(undefined)
     setSelectedTime(undefined)
@@ -116,7 +112,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       })
       await createBooking({
         serviceId: service.id,
-        userId: (data?.user as any).id,
         date: newDate,
       })
       handleBookingSheetOpenChange()
@@ -126,7 +121,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       toast.error("Erro ao criar reserva!")
     }
   }
-
   return (
     <>
       <Card>
@@ -152,7 +146,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                   currency: "BRL",
                 }).format(Number(service.price))}
               </p>
-
               <Sheet
                 open={bookingSheetIsOpen}
                 onOpenChange={handleBookingSheetOpenChange}
@@ -164,12 +157,10 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                 >
                   Reservar
                 </Button>
-
                 <SheetContent className="px-0">
                   <SheetHeader>
                     <SheetTitle>Fazer Reserva</SheetTitle>
                   </SheetHeader>
-
                   <div className="border-b border-solid py-5">
                     <Calendar
                       mode="single"
@@ -202,7 +193,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                       }}
                     />
                   </div>
-
                   {selectedDay && (
                     <div className="flex gap-3 overflow-x-auto border-b border-solid p-5 [&::-webkit-scrollbar]:hidden">
                       {getTimeList(dayBookings).map((time) => (
@@ -219,7 +209,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                       ))}
                     </div>
                   )}
-
                   {selectedTime && selectedDay && (
                     <div className="p-5">
                       <Card>
@@ -233,7 +222,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                               }).format(Number(service.price))}
                             </p>
                           </div>
-
                           <div className="flex items-center justify-between">
                             <h2 className="text-sm text-gray-400">Data</h2>
                             <p className="text-sm">
@@ -242,12 +230,10 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                               })}
                             </p>
                           </div>
-
                           <div className="flex items-center justify-between">
                             <h2 className="text-sm text-gray-400">Horário</h2>
                             <p className="text-sm">{selectedTime}</p>
                           </div>
-
                           <div className="flex items-center justify-between">
                             <h2 className="text-sm text-gray-400">Barbearia</h2>
                             <p className="text-sm">{barbershop.name}</p>
@@ -270,7 +256,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
           </div>
         </CardContent>
       </Card>
-
       <Dialog
         open={signInDialogIsOpen}
         onOpenChange={(open) => setSignInDialogIsOpen(open)}
@@ -282,5 +267,4 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     </>
   )
 }
-
 export default ServiceItem
