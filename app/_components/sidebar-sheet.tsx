@@ -13,7 +13,6 @@ import { quickSearchOptions } from "../_contants/search"
 const SidebarSheet = () => {
   const { data } = useSession()
   const handleLogoutClick = () => signOut()
-
   return (
     <SheetContent className="overflow-y-auto">
       <SheetHeader>
@@ -55,11 +54,14 @@ const SidebarSheet = () => {
             </Link>
           </Button>
         </SheetClose>
-        <Button className="justify-start gap-2" variant="ghost">
-          <CalendarIcon size={18} />
-          Agendamentos
+        <Button className="justify-start gap-2" variant="ghost" asChild>
+          <Link href="/bookings">
+            <CalendarIcon size={18} />
+            Agendamentos
+          </Link>
         </Button>
       </div>
+
       <div className="flex flex-col gap-2 border-b border-solid py-5">
         {quickSearchOptions.map((option) => (
           <SheetClose key={option.title} asChild>
