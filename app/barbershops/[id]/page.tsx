@@ -59,7 +59,6 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
           <SidebarSheet />
         </Sheet>
       </div>
-
       {/* TÍTULO */}
       <div className="border-b border-solid p-5">
         <h1 className="mb-3 text-xl font-bold">{barbershop.name}</h1>
@@ -77,7 +76,6 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
         <h2 className="text-xs font-bold uppercase text-gray-400">Sobre nós</h2>
         <p className="text-justify text-sm">{barbershop?.description}</p>
       </div>
-
       {/* SERVIÇOS */}
       <div className="space-y-3 border-b border-solid p-5">
         <h2 className="text-xs font-bold uppercase text-gray-400">Serviços</h2>
@@ -85,13 +83,12 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
           {barbershop.BarbershopService.map((service) => (
             <ServiceItem
               key={service.id}
-              barbershop={barbershop}
-              service={service}
+              barbershop={JSON.parse(JSON.stringify(barbershop))}
+              service={JSON.parse(JSON.stringify(service))}
             />
           ))}
         </div>
       </div>
-
       {/* CONTATO */}
       <div className="space-y-3 p-5">
         {barbershop.phones.map((phone) => (
