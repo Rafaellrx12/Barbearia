@@ -21,6 +21,7 @@ import { getBookings } from "../_actions/get-bookings"
 import { Dialog, DialogContent } from "./ui/dialog"
 import SignInDialog from "./sign-in-dialog"
 import BookingSummary from "./booking-summary"
+import { useRouter } from "next/navigation"
 
 interface ServiceItemProps {
   service: BarbershopService
@@ -72,9 +73,11 @@ const getTimeList = ({ bookings, selectedDay }: GetTimeListProps) => {
     return true
   })
 }
+
 const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
-  const [signInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
   const { data } = useSession()
+  const router = useRouter()
+  const [signInDialogIsOpen, setSignInDialogIsOpen] = useState(false)
   const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined)
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
@@ -92,7 +95,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     }
     fetch()
   }, [selectedDay, service.id])
-
   const selectedDate = useMemo(() => {
     if (!selectedDay || !selectedTime) return
     return set(selectedDay, {
@@ -100,7 +102,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
       minutes: Number(selectedTime?.split(":")[1]),
     })
   }, [selectedDay, selectedTime])
-
   const handleBookingClick = () => {
     if (data?.user) {
       return setBookingSheetIsOpen(true)
@@ -119,7 +120,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
   const handleTimeSelect = (time: string) => {
     setSelectedTime(time)
   }
-
   const handleCreateBooking = async () => {
     try {
       if (!selectedDate) return
@@ -128,7 +128,12 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
         date: selectedDate,
       })
       handleBookingSheetOpenChange()
-      toast.success("Reserva criada com sucesso!")
+      toast.success("Reserva criada com sucesso!", {
+        action: {
+          label: "Ver agendamentos",
+          onClick: () => router.push("/bookings"),
+        },
+      })
     } catch (error) {
       console.error(error)
       toast.error("Erro ao criar reserva!")
@@ -235,7 +240,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                       )}
                     </div>
                   )}
-
                   {selectedDate && (
                     <div className="p-5">
                       <BookingSummary
