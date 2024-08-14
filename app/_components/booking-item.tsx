@@ -1,5 +1,4 @@
 "use client"
-
 import { Prisma } from "@prisma/client"
 import { Avatar, AvatarImage } from "./ui/avatar"
 import { Badge } from "./ui/badge"
@@ -31,7 +30,6 @@ import { DialogClose } from "@radix-ui/react-dialog"
 import { deleteBooking } from "../_actions/delete-booking"
 import { toast } from "sonner"
 import { useState } from "react"
-
 interface BookingItemProps {
   booking: Prisma.BookingGetPayload<{
     include: {
@@ -43,7 +41,6 @@ interface BookingItemProps {
     }
   }>
 }
-
 // TODO: receber agendamento como prop
 const BookingItem = ({ booking }: BookingItemProps) => {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
@@ -66,7 +63,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
   }
   return (
     <Sheet open={isSheetOpen} onOpenChange={handleSheetOpenChange}>
-      <SheetTrigger className="w-full">
+      <SheetTrigger className="w-full min-w-[90%]">
         <Card className="min-w-[90%]">
           <CardContent className="flex justify-between p-0">
             {/* ESQUERDA */}
